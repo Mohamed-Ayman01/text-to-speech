@@ -20,12 +20,12 @@ body {
   align-items: center;
   flex-direction: column;
   gap: 1rem;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: monospace, Geneva, Tahoma, sans-serif;
   background-color: var(--clr1);
 }
 
 h1 {
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
 
 textarea, input, button {
@@ -51,6 +51,11 @@ textarea, input, button {
   padding: .5rem;
   height: 200px;
   word-break: break-all;
+  border: 1px solid transparent;
+}
+
+.box textarea:disabled {
+  border-color: var(--clr0);
 }
 
 .options {
