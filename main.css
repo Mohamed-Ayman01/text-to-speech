@@ -48,10 +48,11 @@ textarea, input, button {
 }
 
 .box textarea {
-  padding: .5rem;
+  padding: 1rem;
   height: 200px;
   word-break: break-all;
   border: 1px solid transparent;
+  resize: none;
 }
 
 .box textarea:disabled {
@@ -72,4 +73,5 @@ textarea, input, button {
 .options > *:hover {
   opacity: .6;
   cursor: pointer;
+  color: var(--clr0);
 }
