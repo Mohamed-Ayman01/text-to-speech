@@ -24,7 +24,12 @@ speechUtterance.onend = () => {
 }
 
 stopBtn.addEventListener("click", () => {
-  speechSynthesis.cancel();
+  // resuming in case the user paused then decided to end
+  speechSynthesis.resume();
+
+  setTimeout(function () {
+    speechSynthesis.cancel();
+  }, 0)
 
   textArea.disabled = false;
 });
@@ -33,6 +38,12 @@ pauseBtn.addEventListener("click", () => {
   if (speechSynthesis.speaking) speechSynthesis.pause();
 });
 
-speedInput.addEventListener("change", function () {
+speedInput.addEventListener("input", function () {
   speechUtterance.rate = this.value;
-})
+});
+
+speedInput.addEventListener("change", function () {
+  if (+this.value > 5) {
+    this.value = 5;
+  }
+});

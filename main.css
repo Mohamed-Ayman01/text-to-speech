@@ -71,7 +71,6 @@ textarea, input, button {
 }
 
 .options > *:hover {
-  opacity: .6;
   cursor: pointer;
   color: var(--clr0);
 }
