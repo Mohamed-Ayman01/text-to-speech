@@ -1,10 +1,7 @@
 let textArea = document.getElementById("speech");
-let playBtn = document.querySelector(".options .play")
-let pauseBtn = document.querySelector(".options .pause")
-let stopBtn = document.querySelector(".options .stop");
-let speedInput = document.querySelector("input#speed");
+let speechUtterance = new SpeechSynthesisUtterance();
 
-let speechUtterance = new SpeechSynthesisUtterance()
+let playBtn = document.querySelector(".options .play");
 
 playBtn.addEventListener("click", () => {
   if (speechSynthesis.paused) {
@@ -12,16 +9,18 @@ playBtn.addEventListener("click", () => {
     speechSynthesis.resume();
   } else {
     speechUtterance.text = textArea.value;
-    
+
     speechSynthesis.speak(speechUtterance);
-    
+
     textArea.disabled = true;
   }
-})
+});
 
 speechUtterance.onend = () => {
   textArea.disabled = false;
-}
+};
+
+let stopBtn = document.querySelector(".options .stop");
 
 stopBtn.addEventListener("click", () => {
   // resuming in case the user paused then decided to end
@@ -29,14 +28,18 @@ stopBtn.addEventListener("click", () => {
 
   setTimeout(function () {
     speechSynthesis.cancel();
-  }, 0)
+  }, 0);
 
   textArea.disabled = false;
 });
 
+let pauseBtn = document.querySelector(".options .pause");
+
 pauseBtn.addEventListener("click", () => {
   if (speechSynthesis.speaking) speechSynthesis.pause();
 });
+
+let speedInput = document.querySelector("input#speed");
 
 speedInput.addEventListener("input", function () {
   speechUtterance.rate = this.value;
@@ -46,4 +49,35 @@ speedInput.addEventListener("change", function () {
   if (+this.value > 5) {
     this.value = 5;
   }
+});
+
+let voicesSelect = document.querySelector(".options .row select");
+let voicesArr = [];
+let isVoicesLoaded = false;
+
+speechSynthesis.onvoiceschanged = () => {
+  if (isVoicesLoaded === false) {
+    speechSynthesis.getVoices().forEach((obj) => {
+      if (obj.lang === "en-US") {
+        let option = document.createElement("option");
+        option.value = obj.name;
+        option.textContent = obj.name;
+
+        voicesArr.push(obj);
+
+        voicesSelect.append(option);
+
+        isVoicesLoaded = true
+      }
+    });
+  }
+
+};
+
+voicesSelect.addEventListener("input", function () {
+  voicesArr.forEach(obj => {
+    if (obj.name === this.value) {
+      speechUtterance.voice = obj;
+    }
+  })
 });
