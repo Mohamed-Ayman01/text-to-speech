@@ -2,6 +2,7 @@ let textArea = document.getElementById("speech");
 let speechUtterance = new SpeechSynthesisUtterance();
 
 let playBtn = document.querySelector(".options .play");
+let pauseBtn = document.querySelector(".options .pause");
 
 playBtn.addEventListener("click", () => {
   if (speechSynthesis.paused) {
@@ -14,10 +15,25 @@ playBtn.addEventListener("click", () => {
 
     textArea.disabled = true;
   }
+
+  playBtn.classList.add("active");
+  pauseBtn.classList.remove("active");
+});
+
+pauseBtn.addEventListener("click", () => {
+  if (speechSynthesis.speaking) {
+    speechSynthesis.pause();
+
+    pauseBtn.classList.add("active");
+    playBtn.classList.remove("active");
+  }
 });
 
 speechUtterance.onend = () => {
   textArea.disabled = false;
+
+  playBtn.classList.remove("active");
+  pauseBtn.classList.remove("active");
 };
 
 let stopBtn = document.querySelector(".options .stop");
@@ -31,12 +47,6 @@ stopBtn.addEventListener("click", () => {
   }, 0);
 
   textArea.disabled = false;
-});
-
-let pauseBtn = document.querySelector(".options .pause");
-
-pauseBtn.addEventListener("click", () => {
-  if (speechSynthesis.speaking) speechSynthesis.pause();
 });
 
 let speedInput = document.querySelector("input#speed");
@@ -67,17 +77,16 @@ speechSynthesis.onvoiceschanged = () => {
 
         voicesSelect.append(option);
 
-        isVoicesLoaded = true
+        isVoicesLoaded = true;
       }
     });
   }
-
 };
 
 voicesSelect.addEventListener("input", function () {
-  voicesArr.forEach(obj => {
+  voicesArr.forEach((obj) => {
     if (obj.name === this.value) {
       speechUtterance.voice = obj;
     }
-  })
+  });
 });

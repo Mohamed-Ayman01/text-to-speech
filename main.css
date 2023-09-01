@@ -12,6 +12,10 @@
   --clr2: #212121;
 }
 
+.active {
+  color: var(--clr0);
+}
+
 body {
   color: white;
   height: 100vh;
