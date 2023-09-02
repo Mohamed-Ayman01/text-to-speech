@@ -1,12 +1,10 @@
-let textArea = document.getElementById("speech");
 let speechUtterance = new SpeechSynthesisUtterance();
-
+let textArea = document.getElementById("speech");
 let playBtn = document.querySelector(".options .play");
 let pauseBtn = document.querySelector(".options .pause");
 
 playBtn.addEventListener("click", () => {
   if (speechSynthesis.paused) {
-    speechSynthesis.paused = false;
     speechSynthesis.resume();
   } else {
     speechUtterance.text = textArea.value;
@@ -47,6 +45,9 @@ stopBtn.addEventListener("click", () => {
   }, 0);
 
   textArea.disabled = false;
+
+  playBtn.classList.remove("active");
+  pauseBtn.classList.remove("active");
 });
 
 let speedInput = document.querySelector("input#speed");

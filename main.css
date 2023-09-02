@@ -52,6 +52,12 @@ textarea, input, button, select {
   gap: 1rem;
 }
 
+@media (max-width: 460px) {
+  .box {
+    width: 90%
+  }
+}
+
 .box textarea {
   padding: 1rem;
   height: 200px;
@@ -75,6 +81,7 @@ textarea, input, button, select {
   display: flex;
   justify-content: center;
   gap: 1rem;
+  flex-wrap: wrap ;
 }
 
 .options .row > * {
@@ -88,4 +95,6 @@ textarea, input, button, select {
 
 .options .row select {
   flex: 1;
+  max-width: 100%;
+  text-overflow: ellipsis;
 }
